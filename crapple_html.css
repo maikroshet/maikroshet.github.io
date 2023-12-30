@@ -1,0 +1,20 @@
+a { color:#5D5D9E; } 
+a:visited { color:#5D5D9E; } 
+a:active { color:#5C615E; } 
+a:hover { color:#B2B3B4; } 
+body { background-color:#FFFFFF; padding:0;  margin: 0; }
+.textstyle1 { text-align:left; }
+#text_e4bf9ac { position:absolute; left:24%; top:1%; width:531px; height:264px; background:none;  }
+.textstyle2 { text-align:center; }
+.textstyle3 { font-size:88pt; font-family:'Bauhaus 93'; color:#000000; font-style:italic; font-weight:bold;  }
+#img_555429bd { vertical-align: bottom; position:relative; display: inline-block; width:19%; background:none; height:auto;  }
+.textstyle4 { text-align:right; }
+#img_4c46cf44 { vertical-align: top; position:relative; display: inline-block; width:78%; background:none; height:auto;  }
+#button_46b0c69c { box-sizing: border-box; border-radius: 9px; position:absolute; left:12%; top:40%; width:150px; height:40px; background-color:#9B6983; background: linear-gradient(to bottom,#9B6983, #452F3A 50%, #36242D 50%, #261A20); border: 2px solid #51373E;  }
+.vcenterstyle1 { display: table; width: 100%; height: 100%; }
+.vcenterstyle2 { display: table-cell; vertical-align: middle; }
+.textstyle5 { font-size:12pt; font-family:'Viner Hand ITC'; color:#FFFFFF;  }
+#text_55665f04 { position:absolute; left:2%; top:64%; background:none;  }
+.textstyle6 { font-size:96pt; font-family:'Segoe Script'; color:#000000;  }
+.textstyle7 { font-size:12pt; font-family:Arial, Helvetica, sans-serif; color:#000000;  }
+.textstyle8 { font-size:6pt; font-family:Arial, Helvetica, sans-serif; color:#000000;  }

@@ -1,0 +1,21 @@
+a { color:#5D5D9E; } 
+a:visited { color:#5D5D9E; } 
+a:active { color:#5C615E; } 
+a:hover { color:#B2B3B4; } 
+body { background-color:#FFFFFF; padding:0;  margin: 0; }
+.textstyle1 { text-align:left; }
+#text_3261fcc3 { position:absolute; left:0%; top:2%; width:514px; height:242px; background:none;  }
+.textstyle2 { font-size:24pt; font-family:Papyrus; color:#000000;  }
+#img_19d801ec { position:absolute; left:56%; top:1%; width:39%; background:none; height:auto;  }
+#text_59a0caff { position:absolute; left:38%; top:166%; background:none;  }
+.textstyle3 { text-align:center; }
+.textstyle4 { font-size:36pt; font-family:'Viner Hand ITC'; color:#000000;  }
+#button_540f65a5 { box-sizing: border-box; position:absolute; left:21%; top:45%; width:150px; height:40px; background-color:#275930; background: linear-gradient(to bottom, #49A358, #275930); border: 2px solid #0D1F10;  }
+.vcenterstyle1 { display: table; width: 100%; height: 100%; }
+.vcenterstyle2 { display: table-cell; vertical-align: middle; }
+.textstyle5 { font-size:12pt; font-family:'Bauhaus 93'; color:#FFFFFF;  }
+#text_73cb5bf { position:absolute; left:68%; top:62%; background:none;  }
+.textstyle6 { font-size:12pt; font-family:'Viner Hand ITC'; color:#000000;  }
+#edit_7a7cbcc2 { box-sizing: border-box; position:absolute; left:17%; top:63%; width:150px; height:30px; background-color:#FFFFFF; border: 1px solid #A0A0A0; font-size:12pt; font-family:Arial, Helvetica, sans-serif; color:#000000;  }
+#text_3bf7972b { position:absolute; left:17%; top:58%; background:none;  }
+.textstyle7 { font-size:12pt; font-family:Arial, Helvetica, sans-serif; color:#000000;  }
