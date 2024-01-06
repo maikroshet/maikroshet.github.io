@@ -38,6 +38,7 @@ body { background-color:#FFFFFF; background: linear-gradient(to bottom, #7F7F7F,
 .menustyle5 { position:absolute; width:139px; height:38px; left:284px;  }
 .menuentry_text3 { position:absolute; top:0px; bottom:0px; left:0px; right:0px; margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto; height:23px;  }
 .textstyle6 { font-size:15pt; font-family:'Times New Roman', Times, serif; color:#000000; font-style:italic; font-weight:bold;  white-space: nowrap; }
+.menustyle6 { position:absolute; width:152px; height:38px; left:423px;  }
 #container_555429bd { vertical-align: top; position:relative; display: inline-block; width:80%; min-height:655px; background-color:#FFFFFF;  }
 #container_555429bd_padding { margin: 10px; display: block;  }
 .textstyle7 { font-size:32pt; font-family:Arial, Helvetica, sans-serif; color:#000000;  }
