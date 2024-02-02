@@ -3,7 +3,8 @@
 // parameters:
 // elementid: Element id of the root menu item
 // animations: combination of 'fadeMenus', 'moveHeight'
-function wsp_menu(elementid, menuidsuffix, panepadding, animations)
+// openViaMouseHovering: if set to true, on desktop, open menu already via mouse hovering. If set to false, only close and open the menu when clicked or touched.
+function wsp_menu(elementid, menuidsuffix, panepadding, animations, openViaMouseHovering)
 {
 	this.menuElementSubMenuParent = document.getElementById(elementid);
 	this.menuElementEntryHolder = null;
@@ -34,7 +35,7 @@ function wsp_menu(elementid, menuidsuffix, panepadding, animations)
 	this.panepadding = panepadding;
 	this.initialClientHeight = 0;
 	this.currentlyVisibleMenuPane = null;
-	this.useclickmode = true; // support for clicking on menu items, for touch screen devices
+	this.openViaMouseHovering = openViaMouseHovering; 
 	WspMenusLastTimeClicked = 0;  // global if using more than one menu
 	this.LastOpenedSubMenu = null;
 	this.UseAnimation = animations != null;
@@ -71,10 +72,9 @@ function wsp_menu(elementid, menuidsuffix, panepadding, animations)
 		this.menuPanes.push(menupane);
 		
 		var me = this;
-		if (this.useclickmode)
-			e.onclick = function(e)  { me.onMenuitemHovered(this); };
-
-		e.onmouseover = function(e) { me.onMenuitemHovered(this); };
+		e.onclick = function(e)  { me.onMenuitemHovered(this, true); };
+		if (this.openViaMouseHovering)
+			e.onmouseover = function(e) { me.onMenuitemHovered(this, false); };
 	}
 	
 	
@@ -169,11 +169,7 @@ function wsp_menu(elementid, menuidsuffix, panepadding, animations)
 				var submenu = this.createMenuElements(menupane, elementContent, true);
 				menupane.subMenus.push(submenu);
 							
-				if (this.useclickmode)
-					//menuentry.onclick = function(e) { me.onSubMenuEntryHovered(submenu); };
-					menuentry.onclick = function(me, submenu) { return function() { me.onSubMenuEntryHovered(submenu); } }(me, submenu);
-
-				//menuentry.onmouseover = function(e) { me.onSubMenuEntryHovered(submenu); };
+				menuentry.onclick = function(me, submenu) { return function() { me.onSubMenuEntryHovered(submenu); } }(me, submenu);
 				menuentry.onmouseover = function(me, submenu) { return function() { me.onSubMenuEntryHovered(submenu); } }(me, submenu);
 				
 				submenusExist = true;
@@ -204,7 +200,8 @@ function wsp_menu(elementid, menuidsuffix, panepadding, animations)
 			menupane.subMenus[j].style.left = (htmlelement.offsetLeft + maxWidth + panepadding*2) + "px";
 		
 		maxWidth += panepadding*2;
-		menupane.style.width = maxWidth + "px";
+		menupane.style.width = maxWidth + "px"; 
+		menupane.style.whiteSpace = 'nowrap'; // in case for embedded images
 		menupane.aentries = aentries;
 		
 		this.setStylesForVisibilityOfMenuPane(menupane, false);
@@ -234,6 +231,14 @@ function wsp_menu(elementid, menuidsuffix, panepadding, animations)
 		}
 	}
 	
+	this.isMenuPaneWithIndexOpen = function(i)
+	{
+		var paneToCheck = null;
+		if (i >= 0 && i < this.menuPanes.length)
+			paneToCheck = this.menuPanes[i];
+		return (paneToCheck && 	this.currentlyVisibleMenuPane === paneToCheck);
+	}
+	
 	this.showMenuPaneWithIndex = function(i)
 	{
 		if (this.currentlyVisibleMenuPane)
@@ -258,18 +263,23 @@ function wsp_menu(elementid, menuidsuffix, panepadding, animations)
 	}
 	
 	// main menu item hovered
-	this.onMenuitemHovered = function(itemHovered)
+	this.onMenuitemHovered = function(itemHovered, actuallyThisWasAClick)
 	{
-		if ( this.useclickmode )
-			WspMenusLastTimeClicked = this.getTimeMs();
+		WspMenusLastTimeClicked = this.getTimeMs();
 			
 		// check if a root menu item has been hovered. If so, show its menu
 		for (var i=0; i<this.rootMenuElements.length; ++i)
 		{
 			if (itemHovered === this.rootMenuElements[i])
 			{
+				var closeMenuAgain = false;
+				if (actuallyThisWasAClick && !this.openViaMouseHovering && this.isMenuPaneWithIndexOpen(i))
+					closeMenuAgain = true;
+				
 				this.closeAllMenus();
-				this.showMenuPaneWithIndex(i);
+				
+				if (!closeMenuAgain)
+					this.showMenuPaneWithIndex(i);
 				break;
 			}
 		}
@@ -284,14 +294,13 @@ function wsp_menu(elementid, menuidsuffix, panepadding, animations)
 		
 		this.LastOpenedSubMenu = submenu;
 		
-		if ( this.useclickmode )
-			WspMenusLastTimeClicked = this.getTimeMs();
+		WspMenusLastTimeClicked = this.getTimeMs();
 	}
 	
 	
 	this.clickedOutside = function()
 	{
-		if (this.useclickmode && ((this.getTimeMs() - WspMenusLastTimeClicked)< 250))
+		if ((this.getTimeMs() - WspMenusLastTimeClicked)< 250)
 			return;
 			
 		this.closeAllMenus();
@@ -330,6 +339,9 @@ function wsp_menu(elementid, menuidsuffix, panepadding, animations)
 	{
 		if (show)
 		{
+			if (!this.UseAnimation)
+				menupane.style.display = 'block'; // reduces viewport size if animations are not necessary
+			
 			menupane.style.visibility = 'visible';	
 
 			if (this.UseAnimation && this.isUsingFadeMenuPaneAnimations())
@@ -345,6 +357,9 @@ function wsp_menu(elementid, menuidsuffix, panepadding, animations)
 		else
 		{
 			// hide
+			if (!this.UseAnimation)
+				menupane.style.display = 'none'; // reduces viewport size if animations are not necessary
+			
 			menupane.style.visibility = 'hidden';
 			
 			if (this.UseAnimation && this.isUsingFadeMenuPaneAnimations())
